@@ -69,7 +69,7 @@ def pregunta_03():
     # Importe MinMaxScaler
     # Importe Pipeline
     from sklearn.neural_network import MLPRegressor
-    from sklearn.preprocessing import minmax_scale
+    from sklearn.preprocessing import MinMaxScaler
     from sklearn.pipeline import Pipeline
 
     # Cree un pipeline que contenga un estimador MinMaxScaler y un estimador
@@ -78,7 +78,7 @@ def pregunta_03():
         steps=[
             (
                 "minmaxscaler",
-                minmax_scale(),  
+                MinMaxScaler(),  
             ),
             (
                 "mlpregressor",
@@ -110,13 +110,13 @@ def pregunta_04():
     #   * Use parada temprana
 
     param_grid = {
-        'mlpregressor_hidden_layer_sizes': [for (i)in range(1,9)],  
-        'mlpregressor_activation': ['relu'],  
-        'mlpregressor_learning_rate': ['adaptive'],  
-        'mlpregressor_momentum': [0.7,0.8,0.9],  
-        'mlpregressor_learning_rate_init': [0.01,0.05,0.1],  
-        'mlpregressor_max_iter': [5000],  
-        'mlpregressor_early_stopping': [True],  
+        'mlpregressor__hidden_layer_sizes': [(i,) for i in range(1,9)],  
+        'mlpregressor__activation': ['relu'],  
+        'mlpregressor__learning_rate': ['adaptive'],  
+        'mlpregressor__momentum': [0.7,0.8,0.9],  
+        'mlpregressor__learning_rate_init': [0.01,0.05,0.1],  
+        'mlpregressor__max_iter': [5000],  
+        'mlpregressor__early_stopping': [True]  
     }
 
     estimator = pregunta_03()
@@ -150,7 +150,7 @@ def pregunta_05():
     estimator = pregunta_04()
 
     # Entrene el estimador
-    estimator.fit(x_train, y_train)  #
+    estimator.fit(x_train, y_train)  
 
     # Pronostique para las muestras de entrenamiento y validacion
     y_train_pred = estimator.predict(x_train)  
@@ -159,11 +159,11 @@ def pregunta_05():
     # Calcule el error cuadrático medio de las muestras
     mse_train = mean_squared_error(  
         y_train,  
-        y_train_pred, 
+        y_train_pred 
     )
     mse_test = mean_squared_error(  
         y_test,  
-        y_test_pred,   
+        y_test_pred   
     )
 
     # Retorne el mse de entrenamiento y prueba
